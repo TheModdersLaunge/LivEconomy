@@ -4,9 +4,9 @@ import com.mojang.brigadier.CommandDispatcher;
 import com.mojang.brigadier.arguments.StringArgumentType;
 import com.mojang.brigadier.context.CommandContext;
 import modderslaunge.liveconomy.api.AccountApi;
+import modderslaunge.liveconomy.api.ModLogger;
 import net.minecraft.commands.CommandSourceStack;
 import net.minecraft.commands.Commands;
-import net.minecraft.network.chat.Component;
 
 public class LoginCommand {
     public static void register(CommandDispatcher<CommandSourceStack> ctx) {
@@ -19,25 +19,25 @@ public class LoginCommand {
     private static int login(CommandContext<CommandSourceStack> ctx) {
         AccountApi api = new AccountApi(ctx.getSource().getServer());
 
-        if (ctx.getSource().getPlayer() == null) {
-            ctx.getSource().sendFailure(Component.literal("To login you have to be a player!"));
+        if (ctx.getSource().getPlayer().equals(null)) {
+            ModLogger.playerError("Command has to be sent by a user!",ctx.getSource().getPlayer());
             return 0;
         }
 
-        if (api.getAccount(ctx.getArgument("name",String.class)) == null) {
-            ctx.getSource().sendFailure(
-                    Component.literal(String.format( "Account %s does not exist! Please use /account create [username] [password] to make it!",
-                            ctx.getArgument("name",String.class))));
+        if (api.getAccount(ctx.getArgument("name",String.class)).equals(null)) {
+
+                    ModLogger.playerError(String.format("Account %s does not exist! Please use /account create [username] [password] to make it!"
+                            ,ctx.getArgument("name",String.class)), ctx.getSource().getPlayer());
             return 0;
         }
 
-        if (api.getAccount(ctx.getArgument("name",String.class)).getPassword() != ctx.getArgument("password",String.class) && !ctx.getSource().hasPermission(4)) {
-            ctx.getSource().sendFailure(Component.literal("Password is incorrect!"));
+        if (api.getAccount(ctx.getArgument("name",String.class)).getPassword().equals(ctx.getArgument("password",String.class)) && !ctx.getSource().hasPermission(4)) {
+            ModLogger.playerError("Password is incorrect!",ctx.getSource().getPlayer());
             return 0;
-          }
+        }
 
-        // No Login implemented in API :(
-        ctx.getSource().sendSuccess(() -> Component.literal("Successfully logged in!"), false);
+        ModLogger.playerInfo("Successfully logged in!",ctx.getSource().getPlayer());
+
 
         return 0;
     }

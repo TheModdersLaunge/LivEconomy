@@ -5,6 +5,7 @@ import com.mojang.brigadier.arguments.LongArgumentType;
 import com.mojang.brigadier.arguments.StringArgumentType;
 import com.mojang.brigadier.context.CommandContext;
 import modderslaunge.liveconomy.api.AccountApi;
+import modderslaunge.liveconomy.api.ModLogger;
 import modderslaunge.liveconomy.object.Account;
 import net.minecraft.commands.CommandSourceStack;
 import net.minecraft.commands.Commands;
@@ -30,24 +31,25 @@ public class AccountCommand {
     private static int remove(CommandContext<CommandSourceStack> ctx) {
         ServerPlayer user = ctx.getSource().getPlayer();
 
-        if (user == null) {
-            ctx.getSource().sendFailure(Component.literal("Command has to be sent by a player!"));
+        if (user.equals(null)) {
+            ModLogger.playerError("Command has to be sent by a player!",ctx.getSource().getPlayer());
             return 0;
         }
 
 
-
         AccountApi api = new AccountApi(ctx.getSource().getServer());
 
+        if (api.getAccount(ctx.getArgument("name",String.class)).equals(null)) {
+            ModLogger.playerError(String.format("Account %s does not exist!",ctx.getArgument("name",String.class)),ctx.getSource().getPlayer());
+        }
+
         if (!api.getAccount(ctx.getArgument("name", String.class)).getCreator().equals(user.getUUID()) && !ctx.getSource().hasPermission(4)) {
-            ctx.getSource().sendFailure(Component.literal("You do not own this account!"));
+            ModLogger.playerError("You do not own this account!",ctx.getSource().getPlayer());
         }
 
         api.removeAccount(ctx.getArgument("name",String.class));
 
-        ctx.getSource().sendSuccess(
-                () -> Component.literal(String.format("Account %s has been removed",
-                ctx.getArgument("name", String.class))), false);
+        ModLogger.playerInfo(String.format("Account %s has been removed",ctx.getArgument("name",String.class)),ctx.getSource().getPlayer());
 
         return 0;
     }
@@ -56,8 +58,8 @@ public class AccountCommand {
 
         ServerPlayer user = ctx.getSource().getPlayer();
 
-        if (user == null) {
-            ctx.getSource().sendFailure(Component.literal("Command has to be sent by a player!"));
+        if (user.equals(null)) {
+            ModLogger.playerError("Command has to be sent by a player!",ctx.getSource().getPlayer());
             return 0;
         }
 
@@ -65,7 +67,7 @@ public class AccountCommand {
 
         // already exists
         if (api.getAccount(ctx.getArgument("name", String.class)) != null) {
-            ctx.getSource().sendFailure(Component.literal(String.format("Account %s already exists!", ctx.getArgument("name",String.class))));
+            ModLogger.playerError(String.format("Account %s already exists!",ctx.getArgument("name",String.class)),ctx.getSource().getPlayer());
             return 0;
         }
 
@@ -77,10 +79,8 @@ public class AccountCommand {
                 ctx.getArgument("password", String.class),
                 user.getUUID()));
 
-        ctx.getSource().sendSuccess(
-                () -> Component.literal(String.format("Account %s has been created successfully!",
-                        ctx.getArgument("name", String.class))),
-                false);
+        ModLogger.playerInfo(String.format("Account %s has been successfully created!",ctx.getArgument("name",String.class)),ctx.getSource().getPlayer());
+
 
         return 0;
     }
