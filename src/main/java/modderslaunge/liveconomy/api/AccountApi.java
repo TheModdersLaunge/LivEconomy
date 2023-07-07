@@ -11,6 +11,7 @@ public class AccountApi implements IAccountApi {
         this.server = server;
     }
 
+
     @Override
     public void addAccount(Account account) {
 
@@ -29,5 +30,15 @@ public class AccountApi implements IAccountApi {
     @Override
     public void transfer(String name, String password, long amount, String receiver) {
 
+    }
+
+    @Override
+    public void login(String name, String password) {
+
+    }
+
+    @Override
+    public boolean passwordCorrect(String name, String password) {
+        return false;
     }
 }

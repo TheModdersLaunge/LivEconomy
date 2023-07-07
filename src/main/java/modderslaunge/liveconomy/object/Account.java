@@ -17,9 +17,7 @@ public class Account {
         this.balance = 0;
     }
 
-    public ArrayList<Card> getCards() {
-        return cards;
-    }
+    public ArrayList<Card> getCards() {return cards;}
 
     public void addCard(Card card) {
         cards.add(card);
