@@ -21,6 +21,7 @@ public class LoginCommand {
 
         if (ctx.getSource().getPlayer() == null) {
             ctx.getSource().sendFailure(Component.literal("To login you have to be a player!"));
+            return 0;
         }
 
         if (api.getAccount(ctx.getArgument("name",String.class)) == null) {
@@ -32,7 +33,8 @@ public class LoginCommand {
 
         if (api.getAccount(ctx.getArgument("name",String.class)).getPassword() != ctx.getArgument("password",String.class) && !ctx.getSource().hasPermission(4)) {
             ctx.getSource().sendFailure(Component.literal("Password is incorrect!"));
-        }
+            return 0;
+          }
 
         // No Login implemented in API :(
         ctx.getSource().sendSuccess(() -> Component.literal("Successfully logged in!"), false);
