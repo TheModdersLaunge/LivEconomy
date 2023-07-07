@@ -41,10 +41,12 @@ public class AccountCommand {
 
         if (api.getAccount(ctx.getArgument("name",String.class)).equals(null)) {
             ModLogger.playerError(String.format("Account %s does not exist!",ctx.getArgument("name",String.class)),ctx.getSource().getPlayer());
+            return 0;
         }
 
         if (!api.getAccount(ctx.getArgument("name", String.class)).getCreator().equals(user.getUUID()) && !ctx.getSource().hasPermission(4)) {
             ModLogger.playerError("You do not own this account!",ctx.getSource().getPlayer());
+            return 0;
         }
 
         api.removeAccount(ctx.getArgument("name",String.class));
