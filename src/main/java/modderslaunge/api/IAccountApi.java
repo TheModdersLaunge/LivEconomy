@@ -9,5 +9,9 @@ public interface IAccountApi {
 
     void removeAccount(String name); // by  creator or admin
 
+    void login(String name, String password);
+
+    boolean passwordCorrect(String name, String password);
+  
     void transfer(String name, long amount, String receiver);
 }

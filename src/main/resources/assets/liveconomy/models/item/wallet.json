@@ -1,0 +1,20 @@
+{
+ "parent" : "item/generated",
+  "textures" :{
+    "layer0": "liveconomy:item/wallet_full"
+  },
+  "overrides": [
+    {
+      "predicate": {
+        "liveconomy:empty": 0.0
+      },
+      "model": "liveconomy:item/wallet_full"
+    },
+    {
+      "predicate": {
+        "liveconomy:empty": 1.0
+      },
+      "model": "liveconomy:item/wallet_empty"
+    }
+  ]
+}
