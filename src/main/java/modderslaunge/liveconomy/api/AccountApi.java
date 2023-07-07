@@ -27,7 +27,7 @@ public class AccountApi implements IAccountApi {
     }
 
     @Override
-    public void transfer(String name, String password, long amount, String receiver) {
+    public void transfer(String name, long amount, String receiver) {
 
     }
 }
