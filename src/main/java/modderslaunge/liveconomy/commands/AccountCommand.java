@@ -1,7 +1,6 @@
 package modderslaunge.liveconomy.commands;
 
 import com.mojang.brigadier.CommandDispatcher;
-import com.mojang.brigadier.arguments.LongArgumentType;
 import com.mojang.brigadier.arguments.StringArgumentType;
 import com.mojang.brigadier.context.CommandContext;
 import modderslaunge.liveconomy.api.AccountApi;
@@ -9,7 +8,6 @@ import modderslaunge.liveconomy.api.ModLogger;
 import modderslaunge.liveconomy.object.Account;
 import net.minecraft.commands.CommandSourceStack;
 import net.minecraft.commands.Commands;
-import net.minecraft.network.chat.Component;
 import net.minecraft.server.level.ServerPlayer;
 
 public class AccountCommand {
@@ -31,15 +29,15 @@ public class AccountCommand {
     private static int remove(CommandContext<CommandSourceStack> ctx) {
         ServerPlayer user = ctx.getSource().getPlayer();
 
-        if (user.equals(null)) {
-            ModLogger.playerError("Command has to be sent by a player!",ctx.getSource().getPlayer());
+        if (user == null) {
+            ModLogger.ctxError("Command has to be sent by a player",ctx);
             return 0;
         }
 
 
         AccountApi api = new AccountApi(ctx.getSource().getServer());
 
-        if (api.getAccount(ctx.getArgument("name",String.class)).equals(null)) {
+        if (api.getAccount(ctx.getArgument("name",String.class)) == null) {
             ModLogger.playerError(String.format("Account %s does not exist!",ctx.getArgument("name",String.class)),ctx.getSource().getPlayer());
             return 0;
         }
@@ -60,8 +58,8 @@ public class AccountCommand {
 
         ServerPlayer user = ctx.getSource().getPlayer();
 
-        if (user.equals(null)) {
-            ModLogger.playerError("Command has to be sent by a player!",ctx.getSource().getPlayer());
+        if (user == null) {
+            ModLogger.ctxError("Command has to be sent by a player",ctx);
             return 0;
         }
 

@@ -3,9 +3,10 @@ package modderslaunge.liveconomy.api;
 import modderslaunge.api.IAccountApi;
 import modderslaunge.liveconomy.object.Account;
 import net.minecraft.server.MinecraftServer;
+import net.minecraft.world.entity.player.Player;
 
 public class AccountApi implements IAccountApi {
-    private MinecraftServer server;
+    private final MinecraftServer server;
 
     public AccountApi(MinecraftServer server) {
         this.server = server;
@@ -33,7 +34,7 @@ public class AccountApi implements IAccountApi {
     }
 
     @Override
-    public void login(String name, String password) {
+    public void login(String name, String password, Player p) {
 
     }
 

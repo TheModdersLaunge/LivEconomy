@@ -1,7 +1,9 @@
 package modderslaunge.liveconomy.api;
 
+import com.mojang.brigadier.context.CommandContext;
 import modderslaunge.liveconomy.LivEconomy;
 import net.minecraft.ChatFormatting;
+import net.minecraft.commands.CommandSourceStack;
 import net.minecraft.network.chat.Component;
 import net.minecraft.world.entity.player.Player;
 
@@ -28,4 +30,12 @@ public class ModLogger {
                 .append(message).withStyle(ChatFormatting.RED));
     }
 
+    public static void ctxError(String message, CommandContext<CommandSourceStack> ctx) {
+        ctx.getSource().sendFailure(Component.literal("[LivEconomy] ").withStyle(ChatFormatting.RED).append(message).withStyle(ChatFormatting.RED));
+    }
+
+    public static void ctxSuccess(String message, CommandContext<CommandSourceStack> ctx) {
+        ctx.getSource().sendSuccess(() ->
+                Component.literal("[LivEconomy] ").withStyle(ChatFormatting.RED).append(message).withStyle(ChatFormatting.RED),false);
+    }
 }
