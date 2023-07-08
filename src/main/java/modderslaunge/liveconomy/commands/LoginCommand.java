@@ -27,14 +27,15 @@ public class LoginCommand {
         }
 
         if (api.getAccount(ctx.getArgument("name",String.class)) == null) {
-            // Send PlayerError through ModLogger that tells the user that account not exist.
+            // Send PlayerError through ModLogger that account does not exist.
 
             ModLogger.playerError(String.format("Account %s does not exist! Please use /account create [username] [password] to make it!"
                             ,ctx.getArgument("name",String.class)), ctx.getSource().getPlayer());
             return 0;
         }
 
-        if (api.getAccount(ctx.getArgument("name",String.class)).getPassword().equals(ctx.getArgument("password",String.class)) && !ctx.getSource().hasPermission(4)) {
+        // password incorrect and does not have admin privileges
+        if (!api.passwordCorrect(ctx.getArgument("name", String.class), ctx.getArgument("password", String.class)) && !ctx.getSource().hasPermission(4)) {
             ModLogger.playerError("Password is incorrect!",ctx.getSource().getPlayer());
             return 0;
         }
