@@ -23,10 +23,9 @@ public class ModLogger {
                         .append(message));
     }
 
-    public static Component playerError(String message, Player p) {
+    public static void playerError(String message, Player p) {
         p.sendSystemMessage(Component.literal("[LivEconomy] ").withStyle(ChatFormatting.RED)
                 .append(message).withStyle(ChatFormatting.RED));
-        return null;
     }
 
 }
