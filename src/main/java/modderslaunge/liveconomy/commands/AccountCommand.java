@@ -25,11 +25,11 @@ public class AccountCommand {
         ctx.register(Commands.literal("account").then(Commands.literal("changepassword")
                         .then(Commands.argument("name",StringArgumentType.word())
                 .then(Commands.argument("old",StringArgumentType.word())
-                        .then(Commands.argument("new",StringArgumentType.word()).executes(AccountCommand::changepassword))))));
+                        .then(Commands.argument("new",StringArgumentType.word()).executes(AccountCommand::changePassword))))));
 
     }
 
-    private static int changepassword(CommandContext<CommandSourceStack> ctx) {
+    private static int changePassword(CommandContext<CommandSourceStack> ctx) {
         ServerPlayer user = ctx.getSource().getPlayer();
         // Check if sender is null.
         if (user == null) {
