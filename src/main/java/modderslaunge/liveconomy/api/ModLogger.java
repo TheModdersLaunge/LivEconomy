@@ -22,7 +22,7 @@ public class ModLogger {
                 Component.literal("[").withStyle(ChatFormatting.RED)
                         .append("LivEconomy").withStyle(ChatFormatting.AQUA)
                         .append("] ").withStyle(ChatFormatting.RED)
-                        .append(message));
+                        .append(message).withStyle(ChatFormatting.AQUA));
     }
 
     public static void playerError(String message, Player p) {
@@ -36,6 +36,9 @@ public class ModLogger {
 
     public static void ctxSuccess(String message, CommandContext<CommandSourceStack> ctx) {
         ctx.getSource().sendSuccess(() ->
-                Component.literal("[LivEconomy] ").withStyle(ChatFormatting.RED).append(message).withStyle(ChatFormatting.RED),false);
+                Component.literal("[").withStyle(ChatFormatting.RED)
+                        .append("LivEconomy").withStyle(ChatFormatting.AQUA)
+                        .append("] ").withStyle(ChatFormatting.RED)
+                        .append(message).withStyle(ChatFormatting.AQUA),false);
     }
 }
