@@ -3,13 +3,15 @@ package modderslaunge.liveconomy.api;
 import modderslaunge.api.IAccountApi;
 import modderslaunge.liveconomy.object.Account;
 import net.minecraft.server.MinecraftServer;
+import net.minecraft.world.entity.player.Player;
 
 public class AccountApi implements IAccountApi {
-    private MinecraftServer server;
+    private final MinecraftServer server;
 
     public AccountApi(MinecraftServer server) {
         this.server = server;
     }
+
 
     @Override
     public void addAccount(Account account) {
@@ -27,7 +29,17 @@ public class AccountApi implements IAccountApi {
     }
 
     @Override
-    public void transfer(String name, String password, long amount, String receiver) {
+    public void transfer(String name, long amount, String receiver) {
 
+    }
+
+    @Override
+    public void login(String name, String password, Player p) {
+
+    }
+
+    @Override
+    public boolean passwordCorrect(String name, String password) {
+        return false;
     }
 }

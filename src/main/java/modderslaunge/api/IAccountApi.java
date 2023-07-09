@@ -1,6 +1,7 @@
 package modderslaunge.api;
 
 import modderslaunge.liveconomy.object.Account;
+import net.minecraft.world.entity.player.Player;
 
 public interface IAccountApi {
     void addAccount(Account account);
@@ -9,5 +10,10 @@ public interface IAccountApi {
 
     void removeAccount(String name); // by  creator or admin
 
-    void transfer(String name, String password, long amount, String receiver);
+
+    void login(String name, String password, Player p);
+
+    boolean passwordCorrect(String name, String password);
+  
+    void transfer(String name, long amount, String receiver);
 }
