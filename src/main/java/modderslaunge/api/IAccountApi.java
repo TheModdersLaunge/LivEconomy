@@ -16,4 +16,7 @@ public interface IAccountApi {
     boolean passwordCorrect(String name, String password);
   
     void transfer(String name, long amount, String receiver);
+
+    String changePassword(String New,String Old);
+
 }

@@ -56,14 +56,13 @@ public class AccountCommand {
         }
 
         // Checks if new password equals to the old one
-        if (api.getAccount(ctx.getArgument("name",String.class)).getPassword()
-                .equals(ctx.getArgument("new",String.class))) {
+        if (api.passwordCorrect(ctx.getArgument("name",String.class),ctx.getArgument("new",String.class))) {
             ModLogger.playerError("Cannot change password to the previous one!",ctx.getSource().getPlayer());
             return 0;
         }
 
         // Changes password
-        new Account(ctx.getArgument("name",String.class),ctx.getArgument("new",String.class),ctx.getSource().getPlayer().getUUID());
+        api.changePassword(ctx.getArgument("new",String.class), api.getAccount(ctx.getArgument("name",String.class)).getPassword());
         ModLogger.playerInfo("Password has been successfully reset!",ctx.getSource().getPlayer());
 
         return 0;

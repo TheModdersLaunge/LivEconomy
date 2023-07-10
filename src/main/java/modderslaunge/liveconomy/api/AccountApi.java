@@ -34,6 +34,12 @@ public class AccountApi implements IAccountApi {
     }
 
     @Override
+    public String changePassword(String New,String Old) {
+        Old = New;
+        return Old;
+    }
+
+    @Override
     public void login(String name, String password, Player p) {
 
     }
@@ -42,4 +48,5 @@ public class AccountApi implements IAccountApi {
     public boolean passwordCorrect(String name, String password) {
         return false;
     }
+
 }
