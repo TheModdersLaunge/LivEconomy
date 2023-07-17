@@ -24,25 +24,13 @@ public class AccountCommand {
                         .then(Commands.argument("name",StringArgumentType.word())
                                 .then(Commands.argument("old",StringArgumentType.word())
                                         .then(Commands.argument("new",StringArgumentType.word()).executes(AccountCommand::changePassword)))))
-                .then(Commands.literal("account").then(Commands.literal("transfer").
+                .then(Commands.literal("transfer").
                         then(Commands.argument("sender",StringArgumentType.word()).
                                 then(Commands.argument("receiver",StringArgumentType.word()).
-                                        then(Commands.argument("amount", LongArgumentType.longArg(0)).executes(AccountCommand::transfer)))))));
+                                        then(Commands.argument("amount", LongArgumentType.longArg(0)).executes(AccountCommand::transfer))))));
 
 
-        ctx.register(Commands.literal("account")
-                .then(Commands.literal("remove")
-                        .then(Commands.argument("name", StringArgumentType.word()).executes(AccountCommand::remove))));
 
-        ctx.register(Commands.literal("account").then(Commands.literal("changepassword")
-                .then(Commands.argument("name",StringArgumentType.word())
-                        .then(Commands.argument("old",StringArgumentType.word())
-                                .then(Commands.argument("new",StringArgumentType.word()).executes(AccountCommand::changePassword))))));
-
-        ctx.register(Commands.literal("account").then(Commands.literal("transfer").
-                then(Commands.argument("sender",StringArgumentType.word()).
-                then(Commands.argument("receiver",StringArgumentType.word()).
-                then(Commands.argument("amount", LongArgumentType.longArg(0)).executes(AccountCommand::transfer))))));
 
     }
 
@@ -51,7 +39,7 @@ public class AccountCommand {
 
         // Checks if command is sent by a player.
         if (ctx.getSource().getPlayer() == null) {
-            ModLogger.playerError("Command has to be sent by a player!",ctx.getSource().getPlayer());
+            ModLogger.ctxError("Command has to be sent by a player!",ctx);
             return 0;
         }
 
@@ -72,8 +60,8 @@ public class AccountCommand {
                 api.getAccount(ctx.getArgument("sender",String.class)).getBalance(),
                 ctx.getArgument("receiver",String.class));
 
-        ModLogger.ctxError(String.format("You had successfully transferred %s to the Account %s",ctx.getArgument("amount",Long.class),
-                ctx.getArgument("receiver",String.class)),ctx);
+        ModLogger.playerInfo(String.format("You had successfully transferred %s to the Account %s",ctx.getArgument("amount",Long.class),
+                ctx.getArgument("receiver",String.class)),ctx.getSource().getPlayer());
 
         return 0;
     }
