@@ -17,6 +17,6 @@ public interface IAccountApi {
 
     boolean passwordCorrect(String name, String password);
   
-    void transfer(String name, long amount, String receiver);
+    long transfer(String name,long amount,long userBalance, String receiver);
 
 }

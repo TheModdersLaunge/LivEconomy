@@ -36,7 +36,7 @@ public class AccountApi implements IAccountApi {
     }
 
     @Override
-    public void transfer(String name, long amount, String receiver) {
+    public long transfer(String name,long amount,long userBalance, String receiver) {
         AccountSavedData data = AccountSavedData.get(server.overworld());
 
         if (data.getAccount(name) == null || data.getAccount(receiver) == null) {
@@ -55,6 +55,7 @@ public class AccountApi implements IAccountApi {
 
         sender.removeFunds(amount);
         data.getAccount(receiver).addFunds(amount);
+        return amount;
     }
 
     @Override
